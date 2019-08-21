@@ -10,25 +10,33 @@ import XCTest
 @testable import Division
 
 class DivisionTests: XCTestCase {
+  let calculatorBrain = CalculatorBrain()
 
     override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
     }
 
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
-
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+  func testDivisionMethod() {
+     calculatorBrain.divideTwoNumbers(dividend: 10, divisior: 5) { (result, error) in
+       XCTAssert(result == 2, "result must be 2")
     }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+   
+  }
+  
+  func testDivideBy0() {
+    calculatorBrain.divideTwoNumbers(dividend: 10, divisior: 0) { (result, error) in
+     XCTAssertNil(result)
+      XCTAssert(error!.domain == "devide by zero", "error message does not match")
     }
+  }
+  
+  func testDivisionTime() {
+    measure {
+      calculatorBrain.divideTwoNumbers(dividend: 10, divisior: 2) { (result, error) in
+//        XCTAssert(result == 2, "result must be 2")
+      }
+    }
+  }
 
 }

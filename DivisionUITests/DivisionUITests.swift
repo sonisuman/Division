@@ -9,26 +9,59 @@
 import XCTest
 
 class DivisionUITests: XCTestCase {
-
+  let app = XCUIApplication()
+  let device = XCUIDevice.self
+  let element = XCUIElement.self
+  
     override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
-
-        // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
         XCUIApplication().launch()
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
     }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
+  func testmainScreen() {
+    let firstLabel =  app.staticTexts["Enter two number"]
+    XCTAssertTrue(firstLabel.exists, "should be present in main screen")
+  }
+  func test10DevideBy2() {
+    let dev1 = app.textFields.element(boundBy: 0)
+    let dev2 = app.textFields.element(boundBy: 1)
+    dev1.tap()
+    dev1.typeText("10")
+    dev2.tap()
+    
+    let app = XCUIApplication()
+    let element = app.otherElements.containing(.staticText, identifier:"Enter two number").children(matching: .other).element(boundBy: 0)
+    element.children(matching: .textField).element(boundBy: 0).tap()
+    
+    let textField = element.children(matching: .textField).element(boundBy: 1)
+    textField.tap()
+    textField.tap()
+    
+    let calculateButton = app.buttons["Calculate"]
+    calculateButton.tap()
+    calculateButton.tap()
+    calculateButton.tap()
+    calculateButton.tap()
+    calculateButton.tap()
+    calculateButton.tap()
+    calculateButton.tap()
+    calculateButton.tap()
+    dev2.typeText("2")
+    app.buttons["Calculate"].tap()
+    XCTAssertTrue(app.staticTexts["5"].exists, "result should be equal to 5.")
+  }
+  
+  func test20DivideBy2() {
+    
+    let app = XCUIApplication()
+    let element = app.otherElements.containing(.staticText, identifier:"Enter two number").children(matching: .other).element(boundBy: 0)
+    element.children(matching: .textField).element(boundBy: 0).tap()
+    
+    let textField = element.children(matching: .textField).element(boundBy: 1)
+    textField.tap()
+    textField.tap()
+    
+    XCUIApplication().buttons["Calculate"].tap()
+     XCTAssertTrue(app.staticTexts["10"].exists, "result should be equal to 20.")
+  }
 
 }
